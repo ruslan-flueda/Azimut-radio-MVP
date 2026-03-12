@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button class="intro-overlay" id="introOverlay" type="button" aria-label="Start decoding">
+    <span class="intro-overlay__text">вы должны расшифровать запись, нажмите чтобы начать</span>
+  </button>
+  <div class="device">
+    <div class="screen">
+      <canvas class="screen-visualizer" id="wave" aria-label="Audio visualizer"></canvas>
+      <div class="screen-bar">
+        <div class="stats">
+          <span class="stat stat-pink">Distortion: 15</span>
+          <span class="stat stat-green">Delay: 32</span>
+          <span class="stat stat-blue">Echo: 8</span>
+        </div>
+        <div class="timer">00:12:20</div>
+        <div class="screen-controls">
+          <div class="mode-switch">
+            <span class="mode mode-active">Tune</span>
+            <span class="mode mode-idle">Archive</span>
+          </div>
+          <div class="volume">
+            <span class="volume-icon"></span>
+            <div class="volume-track">
+              <span class="volume-fill"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-track">
+          <span class="tick-label">00:00</span>
+          <span class="tick-gap"></span>
+          <span class="tick-label">00:10</span>
+          <span class="tick-gap"></span>
+          <span class="tick-label">00:20</span>
+          <span class="tick-gap"></span>
+          <span class="tick-label">00:30</span>
+          <span class="tick-gap"></span>
+          <span class="tick-label">00:40</span>
+          <span class="tick-gap"></span>
+          <span class="tick-label">00:50</span>
+          <span class="tick-gap"></span>
+          <span class="tick-label">01:00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-row">
+    
+      <div class="knobs">
+        <div
+          class="knob knob-pink"
+          id="cleanKnob"
+          role="slider"
+          aria-label="Distortion"
+          aria-valuemin="0"
+          aria-valuemax="120"
+          aria-valuenow="20"
+        >
+          <div class="knob-scale"></div>
+          <div class="knob-ring">
+            <div class="knob-core">
+              <span class="indicator"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <div class="button tab" id="tabBtn" data-button="tab">tab</div>
+        <div class="button shift" data-button="shift">shift</div>
+        <div class="button space" id="spaceBtn" data-button="space">space</div>
+      </div>
+    </div>
+
+    <div class="audio-visual"></div>
+
+    <script type="module" src="./scripts/script.js"></script>
+  </div>
+</body>
+</html>
