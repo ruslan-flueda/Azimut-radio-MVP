@@ -1,9 +1,9 @@
 import { initButtons } from "./buttons.js";
-import { initKnob } from "./knob.js";
+import { initKnobs } from "./knob.js";
 import { initPlayer } from "./player.js";
 
 initPlayer();
-initKnob();
+initKnobs();
 initButtons();
 
 const introOverlay = document.getElementById("introOverlay");

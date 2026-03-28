@@ -8,62 +8,129 @@
 </head>
 <body>
   <button class="intro-overlay" id="introOverlay" type="button" aria-label="Start decoding">
-    <span class="intro-overlay__text">вы должны расшифровать запись, нажмите чтобы начать</span>
+    <span class="intro-overlay__text">вы должны расшифровать запись, используйте регулятор.<br><span id="press-to-start">нажмите чтобы начать</span></span>
   </button>
   <div class="device">
     <div class="screen">
       <canvas class="screen-visualizer" id="wave" aria-label="Audio visualizer"></canvas>
+      <div class="recording-timer" id="recordingTimer" aria-label="Recording time">00:00</div>
       <div class="screen-bar">
         <div class="stats">
-          <span class="stat stat-pink">Distortion: 15</span>
-          <span class="stat stat-green">Delay: 32</span>
-          <span class="stat stat-blue">Echo: 8</span>
+          <span class="stat stat-pink">Tuning: 0%</span>
+          <span class="stat stat-green">Focus: 0%</span>
+          <span class="stat stat-blue">Clarity: 0%</span>
         </div>
-        <div class="timer">00:12:20</div>
+        <div class="status">SEARCHING</div>
         <div class="screen-controls">
-          <div class="mode-switch">
-            <span class="mode mode-active">Tune</span>
-            <span class="mode mode-idle">Archive</span>
-          </div>
-          <div class="volume">
-            <span class="volume-icon"></span>
-            <div class="volume-track">
-              <span class="volume-fill"></span>
-            </div>
-          </div>
+          <button class="archive-toggle" id="archiveToggle" type="button" aria-pressed="false" aria-label="Toggle archive">
+            <span class="archive-toggle__switch" aria-hidden="true">
+              <span class="archive-toggle__thumb"></span>
+            </span>
+            <span class="archive-toggle__label">Archive</span>
+          </button>
+          <span class="archive-hint" id="archiveHint" aria-hidden="true"></span>
         </div>
       </div>
-      <div class="timeline">
-        <div class="timeline-track">
-          <span class="tick-label">00:00</span>
-          <span class="tick-gap"></span>
-          <span class="tick-label">00:10</span>
-          <span class="tick-gap"></span>
-          <span class="tick-label">00:20</span>
-          <span class="tick-gap"></span>
-          <span class="tick-label">00:30</span>
-          <span class="tick-gap"></span>
-          <span class="tick-label">00:40</span>
-          <span class="tick-gap"></span>
-          <span class="tick-label">00:50</span>
-          <span class="tick-gap"></span>
-          <span class="tick-label">01:00</span>
+      <aside class="archive-panel" id="archivePanel" aria-hidden="true">
+        <div class="archive-panel__scroller">
+          <div class="archive-panel__list">
+            <article class="archive-card archive-card--success">
+              <span class="archive-card__mark" aria-hidden="true"></span>
+              <img class="archive-card__wave" src="./image%2069.png" alt="Audio waveform preview">
+              <div class="archive-card__duration">
+                <span class="archive-card__clock" aria-hidden="true"></span>
+                <span>00:24</span>
+              </div>
+            </article>
+            <article class="archive-card">
+              <span class="archive-card__mark" aria-hidden="true"></span>
+              <img class="archive-card__wave" src="./image%2069.png" alt="Audio waveform preview">
+              <div class="archive-card__duration">
+                <span class="archive-card__clock" aria-hidden="true"></span>
+                <span>00:24</span>
+              </div>
+            </article>
+            <article class="archive-card">
+              <span class="archive-card__mark" aria-hidden="true"></span>
+              <img class="archive-card__wave" src="./image%2069.png" alt="Audio waveform preview">
+              <div class="archive-card__duration">
+                <span class="archive-card__clock" aria-hidden="true"></span>
+                <span>00:24</span>
+              </div>
+            </article>
+            <article class="archive-card">
+              <span class="archive-card__mark" aria-hidden="true"></span>
+              <img class="archive-card__wave" src="./image%2069.png" alt="Audio waveform preview">
+              <div class="archive-card__duration">
+                <span class="archive-card__clock" aria-hidden="true"></span>
+                <span>00:24</span>
+              </div>
+            </article>
+            <article class="archive-card">
+              <span class="archive-card__mark" aria-hidden="true"></span>
+              <img class="archive-card__wave" src="./image%2069.png" alt="Audio waveform preview">
+              <div class="archive-card__duration">
+                <span class="archive-card__clock" aria-hidden="true"></span>
+                <span>00:24</span>
+              </div>
+            </article>
+          </div>
         </div>
-      </div>
+      </aside>
     </div>
+
+    
 
     <div class="controls-row">
     
       <div class="knobs">
+
         <div
           class="knob knob-pink"
-          id="cleanKnob"
+          data-knob="frequency"
           role="slider"
-          aria-label="Distortion"
+          aria-label="Tuning"
+          title="find the right signal"
           aria-valuemin="0"
-          aria-valuemax="120"
-          aria-valuenow="20"
-        >
+          aria-valuemax="1"
+          aria-valuenow="0.2"
+          >
+          <div class="knob-scale"></div>
+          <div class="knob-ring">
+            <div class="knob-core">
+              <span class="indicator"></span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="knob knob-green"
+          data-knob="stability"
+          role="slider"
+          aria-label="Focus"
+          title="reduce distortion"
+          aria-valuemin="0"
+          aria-valuemax="1"
+          aria-valuenow="0.5"
+          >
+          <div class="knob-scale"></div>
+          <div class="knob-ring">
+            <div class="knob-core">
+              <span class="indicator"></span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="knob knob-blue"
+          data-knob="noise"
+          role="slider"
+          aria-label="Clarity"
+          title="remove noise"
+          aria-valuemin="0"
+          aria-valuemax="1"
+          aria-valuenow="0.3"
+          >
           <div class="knob-scale"></div>
           <div class="knob-ring">
             <div class="knob-core">

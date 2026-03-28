@@ -1,0 +1,18 @@
+{
+    "sourceFile": "scripts/buttons.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1773834495272,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1773834495272,
+            "name": "Commit-0",
+            "content": "export function initButtons() {\n  const tabBtn = document.getElementById(\"tabBtn\");\n  const spaceBtn = document.getElementById(\"spaceBtn\");\n  const archiveToggle = document.getElementById(\"archiveToggle\");\n  const archivePanel = document.getElementById(\"archivePanel\");\n  const screenEl = document.querySelector(\".screen\");\n\n  if (!tabBtn || !spaceBtn || !archiveToggle || !archivePanel || !screenEl) {\n    return;\n  }\n\n  let isArchiveOpen = false;\n  let isArchiveFocused = false;\n\n  function renderArchiveState() {\n    archiveToggle.classList.toggle(\"is-active\", isArchiveOpen);\n    archiveToggle.classList.toggle(\"is-focused\", isArchiveFocused);\n    archiveToggle.setAttribute(\"aria-pressed\", String(isArchiveOpen));\n    archivePanel.setAttribute(\"aria-hidden\", String(!isArchiveOpen));\n    screenEl.classList.toggle(\"is-archive-open\", isArchiveOpen);\n  }\n\n  function toggleArchive() {\n    isArchiveFocused = true;\n    isArchiveOpen = !isArchiveOpen;\n    renderArchiveState();\n  }\n\n  function handleSpacePress() {\n    document.dispatchEvent(new CustomEvent(\"control:space\"));\n  }\n\n  tabBtn.addEventListener(\"click\", toggleArchive);\n  spaceBtn.addEventListener(\"click\", handleSpacePress);\n\n  document.addEventListener(\"keydown\", (event) => {\n    if (event.code === \"Tab\") {\n      event.preventDefault();\n      toggleArchive();\n    }\n\n    if (event.code === \"Space\") {\n      event.preventDefault();\n      handleSpacePress();\n    }\n  });\n\n  renderArchiveState();\n}\n"
+        }
+    ]
+}
