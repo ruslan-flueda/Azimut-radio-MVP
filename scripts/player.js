@@ -392,6 +392,11 @@ export function initPlayer() {
   }
 
   async function startPlayback() {
+    // Resume the audio context directly inside the user-initiated action.
+    // On hosted builds the network fetch can break the gesture chain if this
+    // happens later, which causes playback to be blocked by the browser.
+    await playbackContext.resume();
+
     const [noiseBuffer, transmissionBuffer] = await ensureAudioBuffers();
 
     ensureAudioGraph();
@@ -402,8 +407,6 @@ export function initPlayer() {
 
     noiseSourceNode.connect(noiseFilterNode);
     transmissionSourceNode.connect(bandpassNode);
-
-    await playbackContext.resume();
 
     noiseSourceNode.start(0);
     transmissionSourceNode.start(0);
