@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1773744711811,
@@ -140,6 +140,14 @@
                 {
                     "date": 1773832094564,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -668,14 +668,8 @@\n   function drawDecodedLabel(width, height) {\n     if (!currentState.decoded) {\n       return;\n     }\n-\n-    ctx.save();\n-    ctx.textAlign = \"center\";\n-    ctx.font = \"700 20px Arial\";\n-    ctx.fillStyle = \"rgba(210, 255, 224, 0.95)\";\n-    ctx.restore();\n   }\n \n   function drawScene() {\n     const width = canvas.clientWidth;\n"
+                },
+                {
+                    "date": 1774795970375,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,11 +13,11 @@\n   noise: 0.7\n };\n \n const DEFAULT_KNOBS = {\n-  frequency: 0.2,\n-  stability: 0.5,\n-  noise: 0.3\n+  frequency: 0.6,\n+  stability: 0.3,\n+  noise: 0.7\n };\n \n export function initPlayer() {\n   const canvas = document.getElementById(\"wave\");\n@@ -363,11 +363,10 @@\n     }\n \n     if (currentState.decoded && !decodedShown) {\n       decodedShown = true;\n-      window.setTimeout(() => {\n-        window.alert(\"signal decoded\");\n-      }, 60);\n+      window.decoderLocked = true;\n+      document.dispatchEvent(new CustomEvent(\"decoder:decoded\"));\n     }\n \n     if (!currentState.decoded) {\n       decodedShown = false;\n@@ -392,8 +391,13 @@\n     }\n   }\n \n   async function startPlayback() {\n+    // Resume the audio context directly inside the user-initiated action.\n+    // On hosted builds the network fetch can break the gesture chain if this\n+    // happens later, which causes playback to be blocked by the browser.\n+    await playbackContext.resume();\n+\n     const [noiseBuffer, transmissionBuffer] = await ensureAudioBuffers();\n \n     ensureAudioGraph();\n     stopSources();\n@@ -403,10 +407,8 @@\n \n     noiseSourceNode.connect(noiseFilterNode);\n     transmissionSourceNode.connect(bandpassNode);\n \n-    await playbackContext.resume();\n-\n     noiseSourceNode.start(0);\n     transmissionSourceNode.start(0);\n     startedAtContextTime = playbackContext.currentTime;\n     isPlaying = true;\n"
+                },
+                {
+                    "date": 1774795987851,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,11 +13,11 @@\n   noise: 0.7\n };\n \n const DEFAULT_KNOBS = {\n-  frequency: 0.6,\n-  stability: 0.3,\n-  noise: 0.7\n+  frequency: 0.2,\n+  stability: 0.5,\n+  noise: 0.3\n };\n \n export function initPlayer() {\n   const canvas = document.getElementById(\"wave\");\n"
                 }
             ],
             "date": 1773744711811,

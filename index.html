@@ -1,82 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Декодер сигнала</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button class="intro-overlay" id="introOverlay" type="button" aria-label="Start decoding">
-    <span class="intro-overlay__text">вы должны расшифровать запись, используйте регулятор.<br><span id="press-to-start">нажмите чтобы начать</span></span>
-  </button>
-  <div class="device">
+  <section class="landing-hero" id="landingHero">
+    <canvas class="landing-hero__bg" id="landingHeroBg" aria-hidden="true"></canvas>
+    <div class="content">
+      <h1 class="landing-hero__title">Не все слышно сразу</h1>
+      <button id="heroStartButton" type="button">Слушать</button>
+    </div>
+   
+  </section>
+
+  <section class="device-section" id="deviceSection">
+    <div class="device">
     <div class="screen">
-      <canvas class="screen-visualizer" id="wave" aria-label="Audio visualizer"></canvas>
-      <div class="recording-timer" id="recordingTimer" aria-label="Recording time">00:00</div>
-      <div class="screen-bar">
-        <div class="stats">
-          <span class="stat stat-pink">Tuning: 0%</span>
-          <span class="stat stat-green">Focus: 0%</span>
-          <span class="stat stat-blue">Clarity: 0%</span>
-        </div>
-        <div class="status">SEARCHING</div>
-        <div class="screen-controls">
-          <button class="archive-toggle" id="archiveToggle" type="button" aria-pressed="false" aria-label="Toggle archive">
-            <span class="archive-toggle__switch" aria-hidden="true">
-              <span class="archive-toggle__thumb"></span>
-            </span>
-            <span class="archive-toggle__label">Archive</span>
-          </button>
-          <span class="archive-hint" id="archiveHint" aria-hidden="true"></span>
+      <div class="device-preintro" id="devicePreintro">
+        <div class="device-preintro__content">
+          <p class="device-preintro__text">
+            Получен неизвестный сигнал, автоматическая
+            <br>расшифровка не сработала, требуется ручной анализ.
+          </p>
+          <div class="device-preintro__footer">
+            <span class="device-preintro__key">Space</span>
+            <span class="device-preintro__next">Далее</span>
+          </div>
         </div>
       </div>
-      <aside class="archive-panel" id="archivePanel" aria-hidden="true">
+      <div class="device-knobintro" id="deviceKnobintro">
+        <div class="device-knobintro__content">
+          <p class="device-knobintro__text">
+            Используйте регуляторы,
+            <br>чтобы расшифровать сигнал
+          </p>
+          <div class="device-knobintro__icons">
+            <img class="device-knobintro__icon" src="./Icons/Knob.svg" alt="Регулятор">
+            <img class="device-knobintro__icon" src="./Icons/Knob.svg" alt="Регулятор">
+            <img class="device-knobintro__icon" src="./Icons/Knob.svg" alt="Регулятор">
+          </div>
+          <div class="device-preintro__footer">
+            <span class="device-preintro__key">Space</span>
+            <span class="device-preintro__next">Далее</span>
+          </div>
+        </div>
+      </div>
+      <div class="device-intro" id="deviceIntro">
+        <div class="device-intro__content">
+          <p class="device-intro__text">Нажмите <span class="device-preintro__key">Space</span> чтобы начать</p>
+        </div>
+      </div>
+      <canvas class="screen-visualizer" id="wave"></canvas>
+      <div class="recording-timer" id="recordingTimer">00:00</div>
+      <div class="screen-bar">
+        <div class="stats">
+          <span class="stat stat-pink" data-stat="frequency">
+            <span class="stat-label stat-label--desktop">Настройка</span>
+            <span class="stat-label stat-label--mobile">A</span>
+            <span class="stat-value">0</span>
+            <span class="stat-unit">%</span>
+          </span>
+          <span class="stat stat-green" data-stat="stability">
+            <span class="stat-label stat-label--desktop">Фокус</span>
+            <span class="stat-label stat-label--mobile">B</span>
+            <span class="stat-value">0</span>
+            <span class="stat-unit">%</span>
+          </span>
+          <span class="stat stat-blue" data-stat="noise">
+            <span class="stat-label stat-label--desktop">Ясность</span>
+            <span class="stat-label stat-label--mobile">C</span>
+            <span class="stat-value">0</span>
+            <span class="stat-unit">%</span>
+          </span>
+        </div>
+        <div class="status-group">
+          <div class="status">ПОИСК</div>
+        </div>
+        <div class="screen-controls">
+          <div class="archive-shortcut">
+            <span class="device-preintro__key">tab</span>
+            <div class="archive-shortcut__text">
+              <span class="archive-shortcut__label">Архив</span>
+              <span class="decoded-counter" id="decodedCounter" aria-hidden="true">+1</span>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <aside class="archive-panel" id="archivePanel">
+        <div class="archive-panel__header">
+          <div class="archive-panel__hints">
+            <div class="archive-panel__hint">
+              <span class="device-preintro__key">tab</span>
+              <span class="archive-panel__hint-label">Сменить</span>
+            </div>
+            <div class="archive-panel__hint">
+              <span class="device-preintro__key">space</span>
+              <span class="archive-panel__hint-label">Выбрать</span>
+            </div>
+          </div>
+          <div class="archive-panel__title">Архив</div>
+        </div>
         <div class="archive-panel__scroller">
           <div class="archive-panel__list">
             <article class="archive-card archive-card--success">
-              <span class="archive-card__mark" aria-hidden="true"></span>
-              <img class="archive-card__wave" src="./image%2069.png" alt="Audio waveform preview">
-              <div class="archive-card__duration">
-                <span class="archive-card__clock" aria-hidden="true"></span>
-                <span>00:24</span>
+              <div class="archive-card__header">
+                <div class="archive-card__status">
+                  <img class="archive-card__status-icon" src="./Icons/Decoded.svg" alt="Расшифровано">
+                </div>
+                <div class="archive-card__duration">
+                  <img class="archive-card__clock" src="./Icons/Clock.svg" alt="Время">
+                  <span>00:24</span>
+                </div>
+                <div class="archive-card__arrow" aria-hidden="true">
+                  <img class="archive-card__arrow-icon" src="./Icons/Arrow Down.svg" alt="">
+                </div>
+              </div>
+              <div class="archive-card__details">
+                <p class="archive-card__details-text">"[СИСТЕМА]
+                Ошибка: невозможна стабилизация сигнала
+                Код: E-17.4"</p>
               </div>
             </article>
-            <article class="archive-card">
-              <span class="archive-card__mark" aria-hidden="true"></span>
-              <img class="archive-card__wave" src="./image%2069.png" alt="Audio waveform preview">
-              <div class="archive-card__duration">
-                <span class="archive-card__clock" aria-hidden="true"></span>
-                <span>00:24</span>
+            <article class="archive-card archive-card--success">
+              <div class="archive-card__header">
+                <div class="archive-card__status">
+                  <img class="archive-card__status-icon" src="./Icons/Decoded.svg" alt="Расшифровано">
+                </div>
+                <div class="archive-card__duration">
+                  <img class="archive-card__clock" src="./Icons/Clock.svg" alt="Время">
+                  <span>01:20</span>
+                </div>
+                <div class="archive-card__arrow" aria-hidden="true">
+                  <img class="archive-card__arrow-icon" src="./Icons/Arrow Down.svg" alt="">
+                </div>
+              </div>
+              <div class="archive-card__details">
+                <p class="archive-card__details-text">"Фрагмент сигнала стабилизирован. Голосовой отпечаток неполный. Запись помечена для ручной проверки."</p>
               </div>
             </article>
-            <article class="archive-card">
-              <span class="archive-card__mark" aria-hidden="true"></span>
-              <img class="archive-card__wave" src="./image%2069.png" alt="Audio waveform preview">
-              <div class="archive-card__duration">
-                <span class="archive-card__clock" aria-hidden="true"></span>
-                <span>00:24</span>
+            <article class="archive-card archive-card--failure">
+              <div class="archive-card__header">
+                <div class="archive-card__status">
+                  <img class="archive-card__status-icon" src="./Icons/Undecoded.svg" alt="Зашифровано">
+                </div>
+                <div class="archive-card__duration">
+                  <img class="archive-card__clock" src="./Icons/Clock.svg" alt="Время">
+                  <span>none</span>
+                </div>
+                <div class="archive-card__arrow" aria-hidden="true">
+                  <img class="archive-card__arrow-icon" src="./Icons/Arrow Down.svg" alt="">
+                </div>
               </div>
-            </article>
-            <article class="archive-card">
-              <span class="archive-card__mark" aria-hidden="true"></span>
-              <img class="archive-card__wave" src="./image%2069.png" alt="Audio waveform preview">
-              <div class="archive-card__duration">
-                <span class="archive-card__clock" aria-hidden="true"></span>
-                <span>00:24</span>
-              </div>
-            </article>
-            <article class="archive-card">
-              <span class="archive-card__mark" aria-hidden="true"></span>
-              <img class="archive-card__wave" src="./image%2069.png" alt="Audio waveform preview">
-              <div class="archive-card__duration">
-                <span class="archive-card__clock" aria-hidden="true"></span>
-                <span>00:24</span>
+              <div class="archive-card__details">
+                <p class="archive-card__details-text">"[зашифровано] Несущая разрушилась до фиксации. Остаток данных повреждён шумом."</p>
               </div>
             </article>
           </div>
         </div>
       </aside>
+      <div class="decoded-overlay" id="decodedOverlay" aria-hidden="true">
+        <div class="decoded-overlay__content">
+          <h2 class="decoded-overlay__title">Сигнал расшифрован</h2>
+          <p class="decoded-overlay__description">Посмотреть детали можно в архиве</p>
+          <div class="decoded-overlay__actions">
+            <button class="decoded-overlay__button decoded-overlay__button--ghost" id="overlayArchiveBtn" type="button">
+              Архив
+            </button>
+            <button class="decoded-overlay__button decoded-overlay__button--light" id="overlayNextBtn" type="button">
+              Далее
+            </button>
+          </div>
+        </div>
+        <div class="decoded-overlay__footer">
+          <div class="decoded-overlay__hint">
+            <span class="device-preintro__key">tab</span>
+            <span class="decoded-overlay__hint-label">Сменить</span>
+          </div>
+          <div class="decoded-overlay__hint">
+            <span class="device-preintro__key">space</span>
+            <span class="decoded-overlay__hint-label">Выбрать</span>
+          </div>
+        </div>
+      </div>
+      <div class="undecoded-overlay" id="undecodedOverlay" aria-hidden="true">
+        <div class="undecoded-overlay__content">
+          <h2 class="undecoded-overlay__title">Сигнал зашифрован</h2>
+          <p class="undecoded-overlay__description">Вы сможете расшифровать его позже</p>
+        </div>
+        <div class="undecoded-overlay__footer">
+          <div class="decoded-overlay__hint">
+            <div class="decoded-overlay__buttons">
+              <span class="device-preintro__key">shift</span>
+              <span class="decoded-overlay__hint-label">+</span>
+              <span class="device-preintro__key">tab</span>
+            </div>
+            <span class="decoded-overlay__hint-label">Назад</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     
@@ -89,11 +214,7 @@
           class="knob knob-pink"
           data-knob="frequency"
           role="slider"
-          aria-label="Tuning"
-          title="find the right signal"
-          aria-valuemin="0"
-          aria-valuemax="1"
-          aria-valuenow="0.2"
+          title="найдите точную частоту"
           >
           <div class="knob-scale"></div>
           <div class="knob-ring">
@@ -107,11 +228,7 @@
           class="knob knob-green"
           data-knob="stability"
           role="slider"
-          aria-label="Focus"
-          title="reduce distortion"
-          aria-valuemin="0"
-          aria-valuemax="1"
-          aria-valuenow="0.5"
+          title="снизьте искажения"
           >
           <div class="knob-scale"></div>
           <div class="knob-ring">
@@ -125,11 +242,7 @@
           class="knob knob-blue"
           data-knob="noise"
           role="slider"
-          aria-label="Clarity"
-          title="remove noise"
-          aria-valuemin="0"
-          aria-valuemax="1"
-          aria-valuenow="0.3"
+          title="уберите шум"
           >
           <div class="knob-scale"></div>
           <div class="knob-ring">
@@ -141,15 +254,101 @@
       </div>
 
       <div class="buttons">
-        <div class="button tab" id="tabBtn" data-button="tab">tab</div>
-        <div class="button shift" data-button="shift">shift</div>
-        <div class="button space" id="spaceBtn" data-button="space">space</div>
+        <div class="button tab" id="tabBtn" data-button="tab">
+          <span class="button-key">tab</span>
+          <span class="button-label">tab</span>
+        </div>
+        <div class="button shift" id="shiftBtn" data-button="shift">
+          <span class="button-key">shift</span>
+          <span class="button-label">shift</span>
+        </div>
+        <div class="button space" id="spaceBtn" data-button="space">
+          <span class="button-key">space</span>
+          <span class="button-label">space</span>
+        </div>
       </div>
     </div>
 
-    <div class="audio-visual"></div>
+    <div class="slider-controls" aria-label="Mobile decoder controls">
+      <label class="slider-control slider-control-pink" for="slider-frequency">
+        <span class="slider-control__label">Настройка</span>
+        <input
+          class="slider-input"
+          id="slider-frequency"
+          data-slider-knob="frequency"
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          value="20"
+          aria-label="Настройка"
+        >
+      </label>
+      <label class="slider-control slider-control-green" for="slider-stability">
+        <span class="slider-control__label">Фокус</span>
+        <input
+          class="slider-input"
+          id="slider-stability"
+          data-slider-knob="stability"
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          value="50"
+          aria-label="Фокус"
+        >
+      </label>
+      <label class="slider-control slider-control-blue" for="slider-noise">
+        <span class="slider-control__label">Ясность</span>
+        <input
+          class="slider-input"
+          id="slider-noise"
+          data-slider-knob="noise"
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          value="30"
+          aria-label="Ясность"
+        >
+      </label>
+    </div>
 
-    <script type="module" src="./scripts/script.js"></script>
+    <div class="audio-visual"></div>
   </div>
+  </section>
+  <section class="next-record-section" id="nextRecordSection">
+    <div class="next-record-section__content">
+      <div class="next-record-section__panel next-record-section__panel--form is-visible" id="nextRecordFormPanel">
+        <h2 class="next-record-section__title">Введите кодовое имя</h2>
+        <form class="next-record-section__form" id="nextRecordForm">
+          <input
+            class="next-record-section__input"
+            id="nextRecordNameInput"
+            type="text"
+            name="codeName"
+            autocomplete="off"
+            aria-label="Кодовое имя"
+          >
+          <button class="next-record-section__button" type="submit">Отправить</button>
+        </form>
+      </div>
+      <div class="next-record-section__panel next-record-section__panel--result" id="nextRecordResultPanel" aria-hidden="true">
+        <h2 class="next-record-section__title">
+          Спасибо за работу, <span id="nextRecordNameValue">оператор</span>!
+        </h2>
+        <button class="next-record-section__button next-record-section__button--restart" id="nextRecordRestartBtn" type="button">
+          Начать снова
+        </button>
+      </div>
+      <div class="next-record-footer" id="nextRecordFooter" aria-hidden="true">
+        <span class="next-record-footer__name" id="nextRecordFooterName">Руслан Харуллин</span>
+        <button class="next-record-footer__special" id="nextRecordSpecialBtn" type="button">спец запись</button>
+        <span class="next-record-footer__code">бдз 257</span>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="./scripts/script.js"></script>
 </body>
 </html>
