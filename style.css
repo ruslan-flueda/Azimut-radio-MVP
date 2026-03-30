@@ -381,6 +381,13 @@ body:not(.is-next-record-unlocked) .next-record-section {
   color: rgba(255, 255, 255, 0.4);
 }
 
+.device-preintro .device-preintro__key,
+.device-knobintro .device-preintro__key,
+.device-intro .device-preintro__key {
+  background: rgb(255 255 255 / 28%);
+  color: rgb(255 255 255);
+}
+
 @keyframes knobIntroSpinOne {
   0%,
   16%,
@@ -734,15 +741,15 @@ body:not(.is-next-record-unlocked) .next-record-section {
 }
 
 .decoded-overlay__button {
-  min-width: 162px;
-  height: 56px;
+  min-width: 110px;
   border: none;
   border-radius: 999px;
-  padding: 0 28px;
-  font-size: 20px;
+  padding: 10px 10px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 1;
-  cursor: pointer;
+  cursor: default;
+  pointer-events: none;
 }
 
 .decoded-overlay__button--ghost {

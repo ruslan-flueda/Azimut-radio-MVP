@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Декодер сигнала</title>
+  <link rel="icon" type="image/jpeg" href="./favicon.jpg">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -81,7 +82,11 @@
         </div>
         <div class="screen-controls">
           <div class="archive-shortcut">
-            <span class="device-preintro__key">tab</span>
+            <div class="decoded-overlay__buttons">
+              <span class="device-preintro__key">shift</span>
+              <span class="decoded-overlay__hint-label">+</span>
+              <span class="device-preintro__key">tab</span>
+            </div>
             <div class="archive-shortcut__text">
               <span class="archive-shortcut__label">Архив</span>
               <span class="decoded-counter" id="decodedCounter" aria-hidden="true">+1</span>
@@ -177,7 +182,11 @@
         </div>
         <div class="decoded-overlay__footer">
           <div class="decoded-overlay__hint">
-            <span class="device-preintro__key">tab</span>
+            <div class="decoded-overlay__buttons">
+              <span class="device-preintro__key">shift</span>
+              <span class="decoded-overlay__hint-label">+</span>
+              <span class="device-preintro__key">tab</span>
+            </div>
             <span class="decoded-overlay__hint-label">Сменить</span>
           </div>
           <div class="decoded-overlay__hint">
