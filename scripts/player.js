@@ -1,5 +1,5 @@
 const NOISE_FILE = "Radio Static Sound Effect 4.mp3";
-const DEFAULT_FILE = "Audio Conversion Mar 12 2026.mp3";
+const DEFAULT_FILE = "Freepik Audio Editor.mp3";
 const SPECIAL_FILE = "REM Losing My Religion.mp3";
 const SPECIAL_KEY = "decoder.specialTransmission";
 

@@ -264,7 +264,7 @@ export function initButtons() {
     nextResultPanel.setAttribute("aria-hidden", "true");
     nextInput.value = "";
     nextName.textContent = "оператор";
-    footerName.textContent = "Руслан Харуллин";
+    footerName.textContent = "Руслан Хайруллин";
 
     if (nextContent) {
       nextContent.classList.remove("is-footer-visible");
@@ -283,7 +283,7 @@ export function initButtons() {
     nextName.textContent = name;
 
     if (footerName) {
-      footerName.textContent = name;
+      footerName.textContent = "Руслан Хайруллин";
     }
 
     nextFormPanel.classList.remove("is-visible");
@@ -435,20 +435,6 @@ export function initButtons() {
     }
 
     showFinalResult(value);
-  });
-
-  nextInput?.addEventListener("input", () => {
-    if (!footerName || !nextInput) {
-      return;
-    }
-
-    const value = nextInput.value.trim();
-
-    if (value) {
-      footerName.textContent = value;
-    } else {
-      footerName.textContent = "Руслан Харуллин";
-    }
   });
 
   restartButton?.addEventListener("click", reloadNormal);
